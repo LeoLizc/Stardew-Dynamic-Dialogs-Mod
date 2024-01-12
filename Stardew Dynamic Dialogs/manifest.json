@@ -1,0 +1,10 @@
+﻿{
+    "Name": "Stardew Dynamic Dialogs",
+    "Author": "SilverLizc",
+    "Version": "1.0.0",
+    "Description": "GPT generated dialogs for some npc in Stardew Valley",
+    "UniqueID": "SilverLizc.StardewDynamicDialogs",
+    "EntryDll": "Stardew Dynamic Dialogs.dll",
+    "MinimumApiVersion": "3.0.0",
+    "UpdateKeys": []
+}
