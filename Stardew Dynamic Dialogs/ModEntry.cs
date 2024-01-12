@@ -24,6 +24,8 @@ namespace Stardew_Dynamic_Dialogs
         };
 
         private Dictionary<string, NPCPromptData> npcsData;
+        private ModConfig modConfig;
+
         /*********
         ** Public methods
         *********/
@@ -33,7 +35,7 @@ namespace Stardew_Dynamic_Dialogs
         {
             helper.Events.Input.ButtonPressed += this.OnButtonPressed;
             //helper.Events.Content.AssetRequested += OnSpeak;
-
+            this.modConfig = this.Helper.ReadConfig<ModConfig>();
             var model = helper.Data.ReadJsonFile<Dictionary<string, NPCPromptData>>("assets/NPCs.json");
             if (model == null)
             {
@@ -178,11 +180,11 @@ namespace Stardew_Dynamic_Dialogs
             new HttpRequestMessage(HttpMethod.Post, "https://api.openai.com/v1/chat/completions"))
             {
                 requestMessage.Headers.Authorization =
-                    new AuthenticationHeaderValue("Bearer", "YOUR-TOKEN-HERE");
+                    new AuthenticationHeaderValue("Bearer", modConfig.apiKey);
 
                 var jsonContent = new
                 {
-                    model = "gpt-3.5-turbo",
+                    model = modConfig.gptModel,
                     messages = new[]
                     {
                         new
@@ -238,7 +240,7 @@ namespace Stardew_Dynamic_Dialogs
                     {
                         return content.choices[0].message.content;
                     }
-                    catch (Exception ex)
+                    catch (Exception)
                     {
                         this.Monitor.Log($"Error con la respuesta:\n{content}", LogLevel.Debug);
                     }

@@ -1,0 +1,4 @@
+﻿{
+    "apiKey": "INSERT HERE YOU OPENAI API KEY",
+    "gptModel": "gpt-3.5-turbo"
+}
