@@ -10,5 +10,6 @@ namespace Stardew_Dynamic_Dialogs
     {
         public string apiKey {  get; set; }
         public string gptModel { get; set; } = "gpt-3.5-turbo";
+        public float generationProbability { get; set; } = .5f;
     }
 }
