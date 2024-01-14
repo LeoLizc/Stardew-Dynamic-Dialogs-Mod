@@ -9,29 +9,36 @@ namespace Stardew_Dynamic_Dialogs
 {
     internal class Utils
     {
-        public static string GetTimeLivingInTwon()
+        public static string GetTimeLivingInTown()
         {
             int year = Game1.year;
-            int days = GetSeason() * 28 + Game1.dayOfMonth - 1;
+            int days = (Game1.dayOfMonth - 1) * 3;
+            int months = GetSeason() * 3;
 
             if (year == 1 && days == 0)
             {
-                return "Es su primer día en el pueblo.";
+                return "Que acaba de llegar al pueblo.";
             }
 
-            string response = "Han sido ";
+            string response = "Que llegó por primera vez hace ";
 
             if (year != 1)
             {
-                response += year + " años";
+                response += $"{year - 1} año" + (year>2? "s" : "");
+                if (months > 0 || days > 0) response += ", ";
+            }
+
+            if (months > 0)
+            {
+                response += $"{months} mes" + (months>1? "s":"");
             }
 
             if (days > 0)
             {
-                response += " y " + days;
+                response += $" y {days} dias";
             }
 
-            response += " desde que llegó al pueblo.";
+            response += ".";
 
             return response;
         }
@@ -46,7 +53,7 @@ namespace Stardew_Dynamic_Dialogs
 
         public static string GetDay()
         {
-            return $"Es un {DayOfSeason()} de {Game1.CurrentSeasonDisplayName}.";
+            return $"Es un {DayOfSeason()} {Game1.dayOfMonth} de {Game1.CurrentSeasonDisplayName}.";
         }
 
         private static int GetSeason()
@@ -86,8 +93,8 @@ namespace Stardew_Dynamic_Dialogs
             {
                 if (hearthLevel <=8)
                     return "No es la primera vez que hablan.\n" +
-                        $"Sería la {npcData.talkToday}a vez que hablan hoy" +
-                        $"Su nivel de amistad es {hearthLevel}/8, siendo 0 algo neutro, 2 conocidos, 5 una muy buena amistad y 8 que es tu interés amoroso.";
+                        $"Sería la {npcData.talkToday}a vez que hablan hoy.\n" +
+                        $"Su nivel de amistad es {hearthLevel}/8, siendo 0 algo neutro, 2 conocidos, 5 una muy buena amistad y 8 que sientes un interés amoroso.";
             }
             return "";
         }
@@ -95,7 +102,7 @@ namespace Stardew_Dynamic_Dialogs
         public static string loadPrompt(NPC npc, NPCPromptData npcData)
         {
 
-            return $"{GetDay()}\n{GetTimeLocation(npc)}\nEl nuevo granjero del pueblo se acerca a ti y parece quiere hablarte.\n{GetTimeLivingInTwon()}\n{GetTalkingTime(npc, npcData)}";
+            return $"{GetDay()}\n{GetTimeLocation(npc)}\nEl granjero del pueblo, {GetTimeLivingInTown()}, se acerca a ti y parece quiere hablarte.\n{GetTalkingTime(npc, npcData)}";
         }
     }
 }
